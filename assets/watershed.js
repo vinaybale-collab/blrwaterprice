@@ -9,27 +9,29 @@ window.WS_SOURCES = {"q1":[{"title":"Cauvery Basin report","publisher":"India-WR
 
   const BILLED_KL = 485.45e6;      // kL billed a year (main model, base case)
   const REVENUE_CR = 2184;         // BWSSB water and sewerage billing, ₹ crore a year
-  const CONNECTIONS = 11.3e5;
+  const CONNECTIONS = 10.85e5;
   const FAMILY_KL = 16;            // 4 people at 135 litres a day
+  const KERALA_RATE = 3000;        // Kerala's existing paddy royalty, ₹/ha/yr, paid outside this scheme
 
   // Each line: quantity × rate ÷ 1 crore, unless it has its own formula.
+  // who: 'up' = upstream landscape payment, shared between Bengaluru and Karnataka; 'blr' = Bengaluru pays in full.
   const LINES = [
     { k: 'shade', who: 'up', label: 'Keep native shade trees in coffee', q: 20000, qmin: 5000, qmax: 40000, qstep: 1000, qu: 'ha', r: 12000, rmin: 5000, rmax: 25000, rstep: 500, ru: '₹/ha/yr',
-      note: 'Targets the most at-risk shaded coffee and stream-side land: 10,000–30,000 ha of Kodagu\'s 107,000 ha. The rate follows Wayanad\'s Meenangadi scheme, ₹50 per tree a year at 190–350 native trees per ha (₹9,500–17,500).' },
+      note: 'Pays per hectare of native shade that a ground check confirms (for example, at least 12 native tree species per hectare), not per tree planted. Satellites cannot tell native shade from silver oak. Aims at 10,000–30,000 ha of Kodagu\'s 107,000 ha where conversion is most likely, with a cap per holding so large estates that already keep shade are not paid for doing nothing. The rate is near Wayanad\'s Meenangadi scheme (₹50 a tree a year at 190–350 trees per ha). Native shade does not cut robusta yields, so the payment mainly offsets lost timber and the paperwork of tree rights.' },
     { k: 'paddy_k', who: 'up', label: 'Keep paddy fields as wetlands in Kodagu', q: 18000, qmin: 10000, qmax: 25000, qstep: 500, qu: 'ha', r: 5000, rmin: 2000, rmax: 10000, rstep: 500, ru: '₹/ha/yr',
-      note: 'Kodagu has 14,000–23,000 ha of paddy left. Kerala pays paddy owners ₹3,000 per ha a year, plus ₹5,500 of input support; ₹5,000 is set between the two.' },
-    { k: 'paddy_w', who: 'kerala', label: 'Keep paddy in Wayanad (with Kerala)', q: 7500, qmin: 5000, qmax: 10000, qstep: 500, qu: 'ha', r: 3000, rmin: 1000, rmax: 6000, rstep: 500, ru: '₹/ha/yr',
-      note: 'Wayanad has about 7,000–8,000 ha of paddy left. Kerala already pays ₹3,000 per ha a year; this line doubles it, with Kerala co-funding.' },
+      note: 'Kodagu has 14,000–23,000 ha of paddy left. ₹5,000 a hectare will not stop a farmer who can earn ₹1.5–4 lakh an acre from ginger. Kerala pays ₹3,000 a ha and still lost most of its paddy. So this is a stipend for fields that stay paddy anyway; the rule against converting farmland has to hold the line at the edge.' },
+    { k: 'paddy_w', who: 'up', label: 'Top up Kerala\'s paddy payment in Wayanad', q: 10000, qmin: 7500, qmax: 19000, qstep: 500, qu: 'ha', r: 3000, rmin: 1000, rmax: 6000, rstep: 500, ru: '₹/ha/yr',
+      note: 'Estimates of Wayanad\'s remaining paddy run from 8,000 to 19,000 ha. Kerala already pays ₹3,000 a ha a year; this line adds the same again. BWSSB cannot spend in Kerala, so its share would flow through an agreement between Karnataka and Kerala.' },
     { k: 'groves', who: 'up', label: 'Protect sacred groves (devarakadu)', q: 1214, qmin: 500, qmax: 1500, qstep: 1, qu: 'groves', r: 75000, rmin: 25000, rmax: 200000, rstep: 5000, ru: '₹/grove/yr',
-      note: '1,214 groves on 2,550 ha, 21–26% encroached. A yearly grant to each village committee for fencing, a watcher and replanting with native species. The rate is our estimate; no published schedule exists.' },
+      note: '1,214 groves on 2,550 ha, 21–26% encroached. A yearly grant to each village committee for fencing, a watcher and native replanting. Our estimate; no published rate exists.' },
     { k: 'riparian', who: 'up', label: 'Restore stream banks', q: 150, qmin: 0, qmax: 400, qstep: 10, qu: 'km/yr', r: 875000, rmin: 500000, rmax: 1500000, rstep: 25000, ru: '₹/km', perUnit: true,
-      note: 'Native planting on 30 m of both banks, at Namami Gange\'s ₹1.25–1.71 lakh per ha, or ₹7.5–10 lakh per km. 150 km a year restores about 1,500 km over ten years.' },
-    { k: 'stewards', who: 'up', label: 'Paid stewardship work for landless adivasi and workers', q: 2000, qmin: 0, qmax: 5000, qstep: 100, qu: 'people', r: 60000, rmin: 30000, rmax: 120000, rstep: 5000, ru: '₹/person/yr',
-      note: '120 days a year at ₹500 a day, above the ₹427 plantation minimum wage: stream banks, groves, Lantana removal, monitoring. This is how money reaches people who own no land.' },
+      note: 'Native planting on 30 m of both banks, at Namami Gange\'s ₹1.25–1.71 lakh per ha, or ₹7.5–10 lakh per km. This pays for planting, not for the land: a 30 m strip of coffee earns its owner far more. So it should start on stream banks that are state land, swamp or idle. Karnataka\'s forest rules already limit felling near streams.' },
+    { k: 'stewards', who: 'up', label: 'Paid stewardship work for landless adivasi and workers', q: 2000, qmin: 0, qmax: 5000, qstep: 100, qu: 'people', r: 72000, rmin: 30000, rmax: 120000, rstep: 5000, ru: '₹/person/yr',
+      note: '120 days a year at ₹600 a day: stream banks, groves, Lantana removal, monitoring. Coffee pickers already earn about ₹476 a day, so a lower rate would not attract anyone. This is how money reaches people who own no land.' },
     { k: 'stp', who: 'blr', label: 'Co-fund sewage plants above the intake', q: 600, qmin: 0, qmax: 1500, qstep: 50, qu: '₹ cr of plants', r: 25, rmin: 0, rmax: 50, rstep: 5, ru: '% Bengaluru share, over 10 years', formula: (q, r) => q * r / 100 / 10,
-      note: 'Mysuru needs about ₹500 crore of treatment plants; Madikeri about ₹56.5 crore; Kushalnagar, HD Kote, Sargur and Kollegal more. Bengaluru paying a quarter over ten years cleans the river it drinks from, which buys more quality than paying for forests.' },
-    { k: 'arkavathy', who: 'blr', label: 'Arkavathy farmers: replace eucalyptus, cut borewell pumping', q: 10400, qmin: 0, qmax: 15000, qstep: 200, qu: 'ha', r: 10000, rmin: 5000, rmax: 25000, rstep: 500, ru: '₹/ha/yr',
-      note: 'Eucalyptus in the TG Halli catchment grew from 11 to 104 km² as pumping dried the river. Paying farmers to replace it and to retire borewells is the one watershed payment likely to bring water back to the city. The rate is our estimate.' },
+      note: 'Madikeri needs about ₹56.5 crore; Kushalnagar, HD Kote, Sargur, Kollegal and Mysuru more. Nobody has measured Mysuru\'s untreated sewage, so ₹600 crore is our upper estimate. Bengaluru paying a quarter over ten years cleans the river it drinks from.' },
+    { k: 'arkavathy', who: 'blr', label: 'Arkavathy farmers: replace eucalyptus, retire borewells', q: 5000, qmin: 0, qmax: 10400, qstep: 200, qu: 'ha', r: 50000, rmin: 10000, rmax: 110000, rstep: 5000, ru: '₹/ha/yr',
+      note: 'Eucalyptus in the TG Halli catchment grew from 11 to 104 km² as pumping dried the river. Pumping is the main cause, so the payment has to retire borewells too. Eucalyptus for pulp earns ₹30,000–50,000 a ha a year, and Beijing paid about ₹1.1 lakh a ha to move Miyun farmers off paddy. Less than ₹50,000 would not change much. Our estimate; no costed plan exists.' },
   ];
   const ADMIN = { pct: 9, min: 7, max: 11 };   // monitoring and administration, % of payments
   const S = Object.fromEntries(LINES.map(l => [l.k, { q: l.q, r: l.r }]));
@@ -45,17 +47,18 @@ window.WS_SOURCES = {"q1":[{"title":"Cauvery Basin report","publisher":"India-WR
     const upShared = LINES.filter(l => l.who === 'up').reduce((a, l) => a + v[l.k], 0);
     const blrOwn = LINES.filter(l => l.who === 'blr').reduce((a, l) => a + v[l.k], 0);
     const bwssb = (blrOwn + upShared * share / 100) * adm;
-    const kerala = v.paddy_w * adm;
-    const state = total - bwssb - kerala;
+    const kerala = S.paddy_w.q * KERALA_RATE / 1e7;   // Kerala's own payment, outside the scheme
+    const state = total - bwssb;
     const perkl = bwssb * 1e7 / BILLED_KL;
     return {
       v, totalN: total, bwssbN: bwssb,
       total_n: fmt(total, 0), bwssb_n: fmt(bwssb, 0), state_n: fmt(state, 0), kerala_n: fmt(kerala, 0),
       'total': '₹' + fmt(total, 0), 'bwssb': '₹' + fmt(bwssb, 0),
-      perkl_all: '₹' + fmt(total * 1e7 / BILLED_KL, 1), pct_rev: fmt(100 * total / REVENUE_CR, 1) + '%',
+      perkl_all: '₹' + fmt(total * 1e7 / BILLED_KL, 1), pct_rev: fmt(100 * total / REVENUE_CR, 1) + '%', pct_rev_bwssb: fmt(100 * bwssb / REVENUE_CR, 1) + '%',
+      perkl_drawn: '₹' + fmt(bwssb * 1e7 / (BILLED_KL / 0.7), 1), share_of_scheme: fmt(100 * bwssb / total, 0) + '%',
       bwssb_perkl: '₹' + fmt(perkl, 1), family: '₹' + fmt(perkl * FAMILY_KL, 0),
       per_conn: '₹' + fmt(bwssb * 1e7 / 12 / CONNECTIONS, 0),
-      o_shade: fmt(S.shade.q), o_paddy: fmt(S.paddy_k.q + S.paddy_w.q), o_rip: fmt(S.riparian.q * 10), o_jobs: fmt(S.stewards.q),
+      o_shade: fmt(S.shade.q), o_paddy: fmt(S.paddy_k.q + S.paddy_w.q), o_ark: fmt(S.arkavathy.q), o_rip: fmt(S.riparian.q * 10), o_jobs: fmt(S.stewards.q),
     };
   }
 
@@ -71,12 +74,14 @@ window.WS_SOURCES = {"q1":[{"title":"Cauvery Basin report","publisher":"India-WR
     const who = { up: 'Shared', blr: 'Bengaluru', kerala: 'Kerala' };
     body.innerHTML = LINES.map(l => `<tr>
       <td><details class="ws-line"><summary>${esc(l.label)} <span class="badge derived">${who[l.who]}</span></summary><p class="small">${esc(l.note)}</p></details></td>
-      <td class="r"><input type="number" class="ws-in" data-k="${l.k}" data-f="q" min="${l.qmin}" max="${l.qmax}" step="${l.qstep}" value="${l.q}" aria-label="${esc(l.label)}: quantity"> <span class="small">${esc(l.qu)}</span></td>
-      <td class="r"><input type="number" class="ws-in" data-k="${l.k}" data-f="r" min="${l.rmin}" max="${l.rmax}" step="${l.rstep}" value="${l.r}" aria-label="${esc(l.label)}: rate"> <span class="small">${esc(l.ru)}</span></td>
-      <td class="r" id="ws-v-${l.k}"></td></tr>`).join('') +
-      `<tr><td>Monitoring, verification and administration</td><td></td><td class="r"><input type="number" class="ws-in" data-k="admin" data-f="pct" min="${ADMIN.min}" max="${ADMIN.max}" step="0.5" value="${ADMIN.pct}" aria-label="Administration share"> <span class="small">% of payments</span></td><td class="r" id="ws-v-admin"></td></tr>`;
+      <td class="r" data-h="Quantity"><input type="number" class="ws-in" data-k="${l.k}" data-f="q" min="${l.qmin}" max="${l.qmax}" step="${l.qstep}" value="${l.q}" aria-label="${esc(l.label)}: quantity"> <span class="small">${esc(l.qu)}</span></td>
+      <td class="r" data-h="Rate"><input type="number" class="ws-in" data-k="${l.k}" data-f="r" min="${l.rmin}" max="${l.rmax}" step="${l.rstep}" value="${l.r}" aria-label="${esc(l.label)}: rate"> <span class="small">${esc(l.ru)}</span></td>
+      <td class="r" data-h="₹ crore a year" id="ws-v-${l.k}"></td></tr>`).join('') +
+      `<tr><td>Monitoring, verification and administration</td><td class="empty"></td><td class="r" data-h="Share"><input type="number" class="ws-in" data-k="admin" data-f="pct" min="${ADMIN.min}" max="${ADMIN.max}" step="0.5" value="${ADMIN.pct}" aria-label="Administration share"> <span class="small">% of payments</span></td><td class="r" data-h="₹ crore a year" id="ws-v-admin"></td></tr>`;
     for (const el of $$('.ws-in', body)) el.addEventListener('change', () => {
-      const v = +el.value; if (!isFinite(v)) return;
+      if (el.value.trim() === '') { el.value = el.dataset.k === 'admin' ? ADMIN.pct : S[el.dataset.k][el.dataset.f]; return; }
+      let v = +el.value; if (!isFinite(v)) return;
+      v = Math.min(+el.max, Math.max(+el.min, v)); el.value = v;
       if (el.dataset.k === 'admin') ADMIN.pct = v; else S[el.dataset.k][el.dataset.f] = v;
       paint();
     });
@@ -103,58 +108,102 @@ window.WS_SOURCES = {"q1":[{"title":"Cauvery Basin report","publisher":"India-WR
     for (const box of $$('.ws-src')) {
       const list = SRC[box.dataset.q] || [];
       if (!list.length) continue;
-      box.innerHTML = `<div class="small" style="font-weight:600;margin-bottom:4px">Sources</div><ol class="srcs">${list.map(s => `<li><a href="${esc(s.url)}" rel="noopener">${esc(s.title)}</a>${s.publisher ? ', ' + esc(s.publisher) : ''}${s.year ? ', ' + esc(s.year) : ''}. <span class="says">${esc(s.says)}</span></li>`).join('')}</ol>`;
+      box.innerHTML = `<details><summary class="small">Sources (${list.length})</summary><ol class="srcs">${list.map(s => `<li><a href="${esc(s.url)}" rel="noopener">${esc(s.title)}</a>${s.publisher ? ', ' + esc(s.publisher) : ''}${s.year ? ', ' + esc(s.year) : ''}. <span class="says">${esc(s.says)}</span></li>`).join('')}</ol></details>`;
+    }
+  }
+
+  // On phones, tables stack into one block per row; each cell carries its column name.
+  function labelTables() {
+    for (const t of $$('.qs table.stack')) {
+      const heads = $$('thead th', t).map(th => th.textContent.trim());
+      for (const tr of $$('tbody tr', t)) $$('td', tr).forEach((td, i) => { if (heads[i]) td.dataset.h = heads[i]; });
     }
   }
 
   // Schematic of the basin. Coordinates are drawn by hand; colours come from the theme.
-  function drawBasin() {
-    const svg = $('#basin'); if (!svg) return;
-    const T = (x, y, s, cls = 'b-s', anchor = 'start') => `<text x="${x}" y="${y}" class="${cls}" text-anchor="${anchor}">${s}</text>`;
-    const node = (x, y, w, h, title, sub, cls = 'b-node') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" class="${cls}"/>${T(x + 10, y + 20, title, 'b-t')}${sub.map((s, i) => T(x + 10, y + 37 + i * 15, s)).join('')}`;
-    const dam = (x, y, label) => `<rect x="${x - 7}" y="${y - 7}" width="14" height="14" class="b-dam"/>${label ? T(x + 12, y + 4, label, 'b-t') : ''}`;
-    const path = (d, cls) => `<path d="${d}" class="${cls}" marker-end="url(#ar)"/>`;
-    let g = `<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="b-arrowhead"/></marker></defs>`;
+  // Wide screens get the full map; phones get a simpler top-to-bottom version.
+  const T = (x, y, s, cls = 'b-s', anchor = 'start') => `<text x="${x}" y="${y}" class="${cls}" text-anchor="${anchor}">${s}</text>`;
+  const node = (x, y, w, h, title, sub, cls = 'b-node') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" class="${cls}"/>${T(x + 10, y + 20, title, 'b-t')}${sub.map((s, i) => T(x + 10, y + 37 + i * 15, s)).join('')}`;
+  const dam = (x, y) => `<rect x="${x - 7}" y="${y - 7}" width="14" height="14" class="b-dam"/>`;
+  const path = (d, cls, arrow = true) => `<path d="${d}" class="${cls}"${arrow ? ' marker-end="url(#ar)"' : ''}/>`;
+  const DEFS = `<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="b-arrowhead"/></marker></defs>`;
+
+  function basinWide() {
+    let g = DEFS;
     // headwaters and dams
-    g += node(14, 20, 210, 70, 'Kodagu', ['Harangi, Lakshmanatirtha', 'evergreen 40% → 24% (1973–2018)']);
+    g += node(14, 20, 210, 70, 'Kodagu', ['Harangi, Lakshmanatirtha', 'evergreen forest 40% → 24%']);
     g += node(14, 112, 210, 70, 'Hassan, Chikkamagaluru', ['Hemavathi', 'coffee, paddy, arecanut']);
-    g += node(14, 330, 210, 86, 'Wayanad, Kerala', ['~96 of the Kabini\'s 98 TMC', 'paddy 30,000 → 7,500 ha', '2024 landslide: ~330 dead']);
-    g += path('M224,58 C262,72 280,120 300,152', 'b-river');
-    g += path('M224,148 C255,150 275,155 298,158', 'b-river');
-    g += path('M224,372 C258,372 282,362 300,354', 'b-river');
-    g += dam(310, 160, 'KRS') + dam(310, 350, 'Kabini dam');
-    // Kabini joins the Cauvery above the intake (T Narasipur)
-    g += `<path d="M318,165 C340,185 355,200 370,213" class="b-river"/>`;
-    g += `<path d="M318,343 C340,300 358,255 370,218" class="b-river"/>`;
-    g += path('M370,214 C392,230 408,240 420,246', 'b-river');
-    g += T(250, 236, 'Kabini joins', 'b-s');
-    g += T(300, 200, 'Cauvery', 'b-s', 'end');
+    g += node(14, 380, 210, 86, 'Wayanad, Kerala', ['most of the Kabini\'s water', 'paddy 30,000 → 8,000–19,000 ha', '2024 landslide: about 330 dead']);
+    g += path('M224,58 C262,72 280,120 292,150', 'b-river');
+    g += path('M224,148 C255,150 272,155 290,158', 'b-river');
+    g += path('M224,423 C258,423 278,416 291,412', 'b-river');
+    g += dam(300, 160) + T(316, 154, 'KRS', 'b-t');
+    g += dam(300, 410) + T(300, 440, 'Kabini dam', 'b-t', 'middle');
+    // Cauvery and Kabini meet above the intake
+    g += path('M307,166 C335,200 358,236 376,256', 'b-river', false) + T(340, 190, 'Cauvery', 'b-s');
+    g += path('M305,402 C328,350 356,300 376,266', 'b-river', false) + T(326, 330, 'Kabini', 'b-s', 'end');
+    g += T(464, 288, 'Mysuru, Mandya:', 'b-s', 'end') + T(464, 303, 'canals, towns', 'b-s', 'end');
+    g += path('M380,261 L458,261', 'b-river');
     // the intake
-    g += `<circle cx="430" cy="250" r="9" class="b-intake"/>` + T(395, 282, 'Shiva Anicut: city intake', 'b-t') + T(395, 298, '~22 m³/s in the dry months', 'b-s');
+    g += `<circle cx="470" cy="262" r="9" class="b-intake"/>` + T(492, 270, 'Shiva Anicut: city intake', 'b-t') + T(492, 286, 'about 22 m³/s in dry months', 'b-s');
     // gorge, Sangama, Mekedatu, Tamil Nadu
-    g += path('M439,253 C500,268 585,330 630,348', 'b-river');
-    g += T(440, 340, 'Shivanasamudram falls', 'b-s') + T(440, 355, 'and mahseer gorge', 'b-s');
-    g += `<circle cx="640" cy="352" r="6" class="b-join"/>` + T(520, 385, 'Arkavathy joins at Sangama', 'b-s');
-    g += path('M646,355 C690,370 722,386 756,396', 'b-river');
-    g += T(660, 412, 'Mekedatu site:', 'b-s') + T(660, 427, '4,879 ha to drown', 'b-s');
-    g += path('M764,400 C810,412 850,420 900,426', 'b-river');
-    g += T(790, 452, 'Biligundlu → Tamil Nadu', 'b-s');
+    g += path('M474,271 C482,330 560,390 630,398', 'b-river');
+    g += T(520, 384, 'Shivanasamudram falls', 'b-s', 'end') + T(520, 399, 'and mahseer gorge', 'b-s', 'end');
+    g += `<circle cx="640" cy="400" r="6" class="b-join"/>` + T(632, 430, 'Arkavathy joins at Sangama', 'b-s', 'end');
+    g += path('M646,402 C690,408 722,410 752,411', 'b-river');
+    g += dam(762, 412) + T(722, 442, 'Mekedatu site:', 'b-s') + T(722, 457, '4,879 ha of forest to go under water', 'b-s');
+    g += path('M770,413 C820,415 860,418 905,420', 'b-river');
+    g += T(905, 402, 'Biligundlu → Tamil Nadu', 'b-s', 'end');
     // the city and its pipeline
-    g += node(560, 20, 262, 80, 'Bengaluru', ['1.4 crore people; 40% borewell water', 'aquifer pumped ~5× its recharge'], 'b-city');
-    g += path('M436,242 C458,170 510,90 556,70', 'b-pipe');
-    g += T(480, 200, '100 km, lifted 350 m', 'b-t') + T(480, 216, '~1,900 MLD', 'b-s');
-    // what the city sends back
-    g += path('M700,100 C690,190 668,280 643,343', 'b-sew');
-    g += dam(677, 192, '') + T(692, 190, 'TG Halli: 385 → 65 MLD', 'b-s') + T(692, 206, 'eucalyptus, borewells', 'b-s');
-    g += T(686, 252, 'Vrishabhavathi → Byramangala', 'b-s') + T(686, 268, 'half-treated sewage, chromium', 'b-s');
-    g += path('M822,60 C860,60 900,70 935,86', 'b-sew') + T(836, 48, 'K-C, H-N Valley', 'b-s') + T(872, 106, 'Kolar tanks', 'b-s');
-    g += path('M812,100 C850,150 890,190 935,222', 'b-sew') + T(848, 150, 'Thenpennai to', 'b-s', 'end') + T(848, 165, 'Kelavarapalli, TN', 'b-s', 'end');
+    g += node(600, 20, 262, 80, 'Bengaluru', ['1.4 crore people; 40% borewell water', 'aquifer pumped ~9× faster than rain refills it'], 'b-city');
+    g += path('M476,254 C495,170 545,95 596,70', 'b-pipe');
+    g += T(512, 192, '100 km, lifted 300–500 m', 'b-t') + T(512, 208, 'about 1,900 MLD', 'b-s');
+    // the Arkavathy and TG Halli, and the city's sewage
+    g += dam(690, 230) + T(680, 234, 'TG Halli: 385 → 65 MLD', 'b-s', 'end') + T(680, 249, 'eucalyptus, borewells', 'b-s', 'end');
+    g += path('M690,238 C688,300 668,360 645,393', 'b-river');
+    g += path('M760,100 C760,200 720,292 680,322', 'b-sew');
+    g += T(740, 296, 'Vrishabhavathi → Byramangala:', 'b-s') + T(740, 311, 'half-treated sewage, chromium', 'b-s');
+    g += path('M862,45 C890,45 915,50 940,58', 'b-sew') + T(868, 32, 'K-C, H-N Valley', 'b-s') + T(940, 84, 'to Kolar tanks', 'b-s', 'end');
+    g += path('M850,100 C880,140 910,170 940,190', 'b-sew') + T(940, 215, 'Thenpennai to', 'b-s', 'end') + T(940, 230, 'Kelavarapalli, TN', 'b-s', 'end');
     // legend
-    g += `<line x1="14" y1="455" x2="44" y2="455" class="b-river"/>` + T(50, 459, 'river');
-    g += `<line x1="100" y1="455" x2="130" y2="455" class="b-pipe"/>` + T(136, 459, 'city pipeline');
-    g += `<line x1="230" y1="455" x2="260" y2="455" class="b-sew"/>` + T(266, 459, 'city sewage and treated water');
-    svg.innerHTML = g;
+    g += `<line x1="14" y1="498" x2="44" y2="498" class="b-river"/>` + T(50, 502, 'river');
+    g += `<line x1="100" y1="498" x2="130" y2="498" class="b-pipe"/>` + T(136, 502, 'city pipeline');
+    g += `<line x1="230" y1="498" x2="260" y2="498" class="b-sew"/>` + T(266, 502, 'city sewage and treated water');
+    return { vb: '0 0 960 512', g };
   }
 
-  buildCards(); buildCalc(); buildSources(); drawBasin(); paint();
+  function basinNarrow() {
+    let g = DEFS;
+    g += node(10, 10, 340, 70, 'The hills: Kodagu, Hassan, Wayanad', ['forest, coffee, paddy', 'Wayanad is in Kerala']);
+    g += path('M100,80 L100,118', 'b-river');
+    g += dam(100, 130) + T(118, 135, 'KRS and Kabini dams', 'b-t');
+    g += T(118, 151, 'store the monsoon for summer', 'b-s');
+    g += path('M100,138 L100,196', 'b-river');
+    g += `<circle cx="100" cy="206" r="9" class="b-intake"/>` + T(88, 204, 'Shiva Anicut:', 'b-t', 'end') + T(88, 220, 'city intake', 'b-t', 'end');
+    g += path('M108,200 C180,190 240,180 250,262', 'b-pipe');
+    g += T(150, 175, '100 km uphill', 'b-s');
+    g += node(190, 268, 160, 66, 'Bengaluru', ['1.4 crore people', '40% borewell water'], 'b-city');
+    g += path('M100,215 L100,384', 'b-river');
+    g += T(90, 300, 'falls and', 'b-s', 'end') + T(90, 315, 'gorge', 'b-s', 'end');
+    g += path('M230,334 C220,380 160,392 110,394', 'b-sew');
+    g += T(112, 352, 'sewage via the', 'b-s') + T(112, 366, 'Arkavathy', 'b-s');
+    g += `<circle cx="100" cy="396" r="6" class="b-join"/>` + T(116, 418, 'Sangama', 'b-s');
+    g += path('M100,402 L100,452', 'b-river');
+    g += dam(100, 464) + T(118, 468, 'Mekedatu site', 'b-s');
+    g += path('M100,472 L100,520', 'b-river') + T(118, 520, 'Tamil Nadu', 'b-t');
+    g += path('M320,334 L320,452', 'b-sew') + T(310, 474, 'Thenpennai and', 'b-s', 'end') + T(310, 489, 'Kolar tanks', 'b-s', 'end');
+    g += `<line x1="10" y1="556" x2="34" y2="556" class="b-river"/>` + T(40, 560, 'river');
+    g += `<line x1="90" y1="556" x2="114" y2="556" class="b-pipe"/>` + T(120, 560, 'pipeline');
+    g += `<line x1="190" y1="556" x2="214" y2="556" class="b-sew"/>` + T(220, 560, 'sewage');
+    return { vb: '0 0 360 572', g };
+  }
+
+  function drawBasin() {
+    const svg = $('#basin'); if (!svg) return;
+    const { vb, g } = window.matchMedia('(max-width: 640px)').matches ? basinNarrow() : basinWide();
+    svg.setAttribute('viewBox', vb); svg.innerHTML = g;
+  }
+
+  buildCards(); buildCalc(); buildSources(); labelTables(); drawBasin(); paint();
+  window.matchMedia('(max-width: 640px)').addEventListener('change', drawBasin);
 })();

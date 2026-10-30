@@ -269,3 +269,28 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .dl { display: inline-flex; gap: 10px; align-items: center; font-weight: 600; text-decoration: none; border: 1px solid var(--water); border-radius: 4px; padding: 8px 14px; color: var(--water); }
 .dl:hover { background: var(--water-3); }
 footer a { color: inherit; }
+.standfirst { font-family: var(--f-display); font-size: var(--s-3, 1.35rem); line-height: 1.35; max-width: 40ch; margin: 4px 0 6px; color: var(--ink); }
+.toc a { padding: 4px 0; display: inline-block; }
+.ws-src summary { cursor: pointer; font-weight: 600; color: var(--ink-2); }
+.ws-src details[open] summary { margin-bottom: 6px; }
+.calc-t input[type=number] { border-color: var(--ink-3); }
+@media (max-width: 640px) {
+  .site-nav { position: static; }
+  .site-nav .in { gap: 4px 16px; }
+  td.r, th.r { white-space: normal; }
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: auto; }
+  table.stack tr { border-bottom: 1px solid var(--rule); padding: 10px 0; }
+  table.stack td { border: 0; padding: 2px 0; text-align: left; }
+  table.stack td:first-child { font-weight: 600; }
+  table.stack td:not(:first-child)[data-h]::before { content: attr(data-h) ": "; color: var(--ink-3); font-size: var(--s-0); }
+  .calc-t thead { display: none; }
+  .calc-t, .calc-t tbody, .calc-t tfoot { display: block; }
+  .calc-t tr { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .calc-t td { display: block; border: 0; padding: 0; text-align: left; white-space: normal; }
+  .calc-t td:first-child { grid-column: 1 / -1; }
+  .calc-t td.empty { display: none; }
+  .calc-t td[data-h]::before { content: attr(data-h); display: block; color: var(--ink-3); font-size: var(--s-0); }
+  .calc-t td[id^="ws-v-"], .calc-t tfoot td.r { grid-column: 1 / -1; font-weight: 700; font-size: var(--s-2); }
+  .calc-t input[type=number] { width: 100%; max-width: 140px; }
+}
