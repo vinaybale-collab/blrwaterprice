@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Method and checks · Bengaluru water price</title>
+<meta name="description" content="How the Bengaluru water price model was built, reviewed and checked.">
+<meta property="og:title" content="Method and checks · Bengaluru water price">
+<meta property="og:description" content="How the Bengaluru water price model was built, reviewed and checked.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202.5c3.6%204.6%206.5%208.3%206.5%2011.7a6.5%206.5%200%200%201-13%200C5.5%2010.8%208.4%207.1%2012%202.5z%22%20fill%3D%22%230b6f7a%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<style>html,body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site"><div class="in" style="padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))"><a class="brand" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c3.6 4.6 6.5 8.3 6.5 11.7a6.5 6.5 0 0 1-13 0C5.5 10.8 8.4 7.1 12 2.5z" fill="var(--water)"/></svg>Bengaluru water price</a><a class="l" href="index.html">The answer</a><a class="l" href="assumptions.html">Assumptions</a><a class="l" href="sources.html">Sources</a><a class="l" href="method.html" aria-current="page">Method and checks</a><a class="l" href="downloads/bengaluru-water-price-model.xlsx" download>Download the model</a></div></nav>
+<div class="wrap" id="top">
+<header class="hero"><div class="eyebrow">Bengaluru water price · Method and checks</div><h1>How the answer was built and checked</h1>
+<div class="lede col prose"><p>The answer is a ladder. Each step adds one cost the step below leaves out. The steps follow the full-cost method that Rogers, Bhatia and Huber set out for the Global Water Partnership in 1998. First comes what it costs to supply water. Then what the water is worth to others. Then what it does to the climate.</p></div></header>
+<section><div class="col prose">
+<h2>How the model works</h2>
+<ul>
+<li><b>Everything is per kilolitre billed</b>, in 2026-27 rupees after inflation. BWSSB bills about 70% of the water it pumps, so every cost is spread over the water customers pay for.</li>
+<li><b>Running costs</b> come from BWSSB's reported spending of ₹239 crore a month (August 2025), split between water and sewerage.</li>
+<li><b>Pipes, pumps and plants</b> are priced at what they would cost to build today. Each one carries a fixed yearly payment that repays the money with interest over its life and pays to rebuild it. That one payment replaces depreciation, interest and maintenance spending, so nothing is counted twice.</li>
+<li><b>Sewage</b> is collected and cleaned to the National Green Tribunal's standard, then to the quality a river can take. Optionally, the eastern valleys' water is pumped back to the Cauvery.</li>
+<li><b>Value to others</b> splits in two. Some losses happen at the intake, whatever the city does later: dry-month river flow, Shivanasamudram power and the catchment. Others apply only to water that never returns: farms, Mettur power, the delta and wells.</li>
+<li><b>Carbon</b> uses the electricity BWSSB pays for, India's grid emission factor (CEA, 2025-26) and the US government's estimate of the damage per tonne.</li>
+<li><b>Uncertainty</b> comes from running the model 1,500 times, drawing each uncertain number from its range. The range shown is where the answer lands eight times in ten.</li>
+<li><b>The next project</b> (Cauvery Stage VI) is modelled separately, year by year, the way a lender would, for four ways of paying for it.</li>
+</ul>
+<p>The <a href="downloads/bengaluru-water-price-model.xlsx" download>spreadsheet</a> has the same formulas, line by line, and matches the site to the paisa.</p>
+</div></section>
+<section id="checked">
+  <div class="col prose">
+    <h2>How this was checked</h2>
+    <p>The draft and both models went through six independent reviews, each with a different lens. Every point below was changed in this version.</p>
+    <ul>
+      <li><b>Water-utility economist.</b> Took penalties out of revenue. Moved the Stage VI scarcity premium from the ladder to the tariff. Indexed opex to FY27 and tied carbon to the electricity bill. Added the per-kL-delivered and efficient-loss views. Exposed the borewell sewerage gap. Rebuilt the tariff after the first one failed the affordability test.</li>
+      <li><b>Infrastructure-finance analyst.</b> Corrected the Pune critique: its "debt service" is interest only, so the errors are renewal and risk counted twice, not capital counted three times. Added the regulator's view, relabelled the cost-of-capital range, updated bond pricing, and checked revenue-bond and HAM feasibility.</li>
+      <li><b>Ecological economist and fact-checker.</b> Moved the carbon price to EPA's global value for today's emissions in 2026 dollars. Added residual harm and today's untreated-sewage damage. Corrected the lift, the South Pennar BOD, the downstream acreage, the NYC watershed figures, Bellandur and the Pune distance. Reframed the tanker comparison.</li>
+      <li><b>Project-finance stress test</b> (verdict: holds with fixes). Re-sized the hybrid annuity. Replaced a lender test that measured the ramp-up with a sculpted-repayment test. Priced the yen risk. Added pre-tax private returns, a 40-year life, overruns, insurance and fixed costs.</li>
+      <li><b>Final read, as a Bengaluru water expert might read it.</b> Corrected the basin claim: the Vrishabhavathi valley returns to the Cauvery through the Arkavathy, so about 60% of the draw is lost to the basin, not all of it. Counted apartment and campus STPs in the untreated gap. Corrected the lifeline-versus-deficit comparison and the HAM figures. Split the financing question into the system view (6) and the Stage VI project (6b). Added what the page does not yet price: groundwater, tankers and treated-water transfers.</li>
+      <li><b>Sources registry.</b> Found two or more sources for every variable and flagged where support is thin. Found that BWSSB publishes its sewer length, which the first draft had assumed.</li>
+    </ul>
+  </div>
+</section>
+<section><div class="col prose"><h2>What we could not find</h2><ul>
+<li>BWSSB's audited accounts: its debt, depreciation and how its spending splits between water and sewerage.</li>
+<li>How much water BWSSB bills in each tariff slab. Without it, nobody can test whether a new tariff would cover costs.</li>
+<li>An independent audit of BWSSB's water losses.</li>
+<li>BWSSB's electricity use in units, rather than rupees.</li>
+<li>A study of how fish and wildlife in the Cauvery gorge respond to lower dry-month flows.</li>
+<li>A peer-reviewed value for K-C Valley water in Kolar.</li>
+</ul><p>Each one would narrow the ranges more than any amount of extra modelling.</p></div></section>
+<footer>
+  <span>Prepared by <a href="https://urvara.life">Urvara</a>, October 2026. FY2026-27 real rupees unless stated. Exchange rates: FBIL reference rates, 30 October 2026.</span>
+  <span>Every number on the site comes from one model, which you can <a href="downloads/bengaluru-water-price-model.xlsx" download>download as a spreadsheet</a> with live formulas. Changes you make to assumptions are saved in your own browser only.</span>
+</footer>
+</div>
+<div id="pop" hidden role="dialog" aria-modal="false" aria-labelledby="pop-h"></div>
+
+</body>
+</html>
