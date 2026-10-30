@@ -3,7 +3,7 @@
 A question-by-question answer to the true price of piped water in Bengaluru, built by [Urvara](https://urvara.life).
 
 - **Read it:** https://vinaybale-collab.github.io/blrwaterprice/
-- **The answer (FY2026-27, ₹ per kilolitre billed):** households pay about ₹21; BWSSB spends about ₹61 to run the system today; supplying, renewing, cleaning and returning the water costs about ₹113; counting the river, farms, forests and carbon, about ₹212.
+- **The answer (FY2026-27, ₹ per kilolitre billed):** households pay about ₹21; BWSSB spends about ₹61 to run the system today; supplying it, replacing the pipes and plants, and cleaning and returning the sewage costs about ₹113; counting the river, its wildlife, the farms, the forests and the carbon, about ₹208.
 - **Every number is editable.** The [assumptions page](https://vinaybale-collab.github.io/blrwaterprice/assumptions.html) lists each one with its sources and range.
 - **The model** is in `downloads/bengaluru-water-price-model.xlsx`, with live formulas, and in `assets/app.js`.
 
