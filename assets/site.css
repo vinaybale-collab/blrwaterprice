@@ -226,6 +226,27 @@ footer { font-size: var(--s-0); color: var(--ink-3); border-top: 1px solid var(-
 .v-others:empty { display: none; }
 .tog { display: inline-flex; gap: 8px; align-items: center; font-weight: 600; color: var(--water); cursor: pointer; margin-left: 4px; }
 .tog input { accent-color: var(--water); width: 18px; height: 18px; }
+
+/* Watershed page */
+#basin text { font-family: var(--f-body); }
+#basin .b-t { fill: var(--ink); font-size: 13px; font-weight: 600; }
+#basin .b-s { fill: var(--ink-2); font-size: 11.5px; }
+#basin .b-node { fill: var(--paper); stroke: var(--rule); }
+#basin .b-city { fill: var(--ochre-soft); stroke: var(--ochre); }
+#basin .b-river { fill: none; stroke: var(--water); stroke-width: 3; }
+#basin .b-pipe { fill: none; stroke: var(--carbon); stroke-width: 3; stroke-dasharray: 8 5; }
+#basin .b-sew { fill: none; stroke: var(--bad); stroke-width: 2.5; stroke-dasharray: 3 4; }
+#basin .b-arrowhead { fill: var(--ink-3); }
+#basin .b-dam { fill: var(--ink); }
+#basin .b-intake { fill: var(--ochre); stroke: var(--ink); stroke-width: 1.5; }
+#basin .b-join { fill: var(--water); }
+.calc-t input[type=number] { font: inherit; font-family: var(--f-data); font-size: var(--s-0); width: 92px; padding: 3px 6px; border: 1px solid var(--rule); border-radius: 4px; background: var(--sheet); color: var(--ink); }
+.calc-t td { vertical-align: middle; }
+.ws-line summary { cursor: pointer; font-weight: 600; }
+.ws-line p { margin: 6px 0 0; max-width: 60ch; }
+.ws-src { border-top: 1px solid var(--rule); padding-top: 10px; }
+.ws-src .srcs { font-size: var(--s-0); }
+
 #pop .pv { font-family: var(--f-display); font-size: var(--s-4); line-height: 1; color: var(--water); }
 
 @media (prefers-reduced-motion: no-preference) { .ladder rect, .ladder line, .billrow .bar > i { transition: all .25s ease; } }
